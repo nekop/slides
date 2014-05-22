@@ -14,6 +14,10 @@
 
 
 
+<!-- .slide: data-background="images/arq/lego.jpg" -->
+
+
+
 ## 手動統合テスト
 
 - 膨大なExcelテスト仕様書
