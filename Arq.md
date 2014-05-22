@@ -61,9 +61,9 @@ http://arquillian.org/
 ```java
 @Stateless
 public class HelloBean {
-  public String sayHello(String name) {
-    return "Hello " + name + "!";
-  }
+    public String sayHello(String name) {
+        return "Hello " + name + "!";
+    }
 } 
 ```
 
@@ -75,17 +75,17 @@ public class HelloBean {
 ```java
 @RunWith(Arquillian.class)
 public class HelloBeanTest {
-  @Inject HelloBean hello;
-  @Test
-  public void shouldSayHello() throws Exception {
-    Assert.assertEquals("Hello Earthling!",
-                        hello.sayHello("Earthling"));
-  }
+    @Inject HelloBean hello;
+    @Test
+    public void shouldSayHello() throws Exception {
+        Assert.assertEquals("Hello Earthling!",
+                            hello.sayHello("Earthling"));
+    }
 
-  @Deployment
-  public static WebArchive createDeployment() {
-    return ...;
-  }
+    @Deployment
+    public static WebArchive createDeployment() {
+        return ...;
+    }
 }
 ```
 
@@ -150,16 +150,16 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 ```java
 @RunWith(Arquillian.class)
 public class PersistenceTest {
-  @Deployment
-  public static WebArchive deployment() {
-    //...
-    .addAsManifestResource("test-persistence.xml","persistence.xml");
-  }
+    @Deployment
+    public static WebArchive deployment() {
+        //...
+        .addAsManifestResource("test-persistence.xml","persistence.xml");
+    }
 
-  @Test
-  @UsingDataSet("datasets/users.yml")
-  @ShouldMatchDataSet("datasets/expected-users.yml")
-  public void test() { //... }
+    @Test
+    @UsingDataSet("datasets/users.yml")
+    @ShouldMatchDataSet("datasets/expected-users.yml")
+    public void test() { //... }
 }
 ```
 
@@ -179,14 +179,14 @@ Seleniumを使ったWebテスト、Ajaxもカバー
 
 @Test
 public void should_login_successfully() {
-  browser.get(deploymentUrl.toExternalForm() + "login.jsf");
-  userName.sendKeys("demo");
-  password.sendKeys("demo");
-  guardHttp(loginButton).click();
-  assertEquals("Welcome", facesMessage.getText().trim());
-  whoAmI.click();
-  waitAjax().until().element(signedAs).is().present();
-  assertTrue(signedAs.getText().contains("demo"));
+    browser.get(deploymentUrl.toExternalForm() + "login.jsf");
+    userName.sendKeys("demo");
+    password.sendKeys("demo");
+    guardHttp(loginButton).click();
+    assertEquals("Welcome", facesMessage.getText().trim());
+    whoAmI.click();
+    waitAjax().until().element(signedAs).is().present();
+    assertTrue(signedAs.getText().contains("demo"));
 }
 ```
 
@@ -201,17 +201,17 @@ public void should_login_successfully() {
 @Drone WebDriver driver;
 
 Warp
-  .initiate(new Activity() { // executed on client side
-    public void perform() {
-      browser.navigate().to(contextPath + "index.jsf");
-    }})
-  .inspect(new Inspection() { // executed on server side
-    @Inject IndexBean bean;
-    @AfterPhase(RENDER_RESPONSE)
-    public void verifyAccess() {
-      Assert.assertTrue("true", bean.isAccessed());
-    }
-  });
+    .initiate(new Activity() { // executed on client side
+        public void perform() {
+            browser.navigate().to(contextPath + "index.jsf");
+        }})
+    .inspect(new Inspection() { // executed on server side
+        @Inject IndexBean bean;
+        @AfterPhase(RENDER_RESPONSE)
+        public void verifyAccess() {
+            Assert.assertTrue("true", bean.isAccessed());
+        }
+    });
 ```
 
 
@@ -237,7 +237,7 @@ Warp
 
 
 
-<!-- .slide: data-background="images/arq/arquillian_desktop_1024x800.jpg" -->
+<!-- .slide: data-background="images/arq/desktop_freeyourcode_1280x800.jpg" -->
 
 
 
