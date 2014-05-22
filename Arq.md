@@ -4,6 +4,12 @@
 
 
 
+# Takayoshi Kimura
+## JBoss / WildFlyの中の人
+### twitter: nekop
+
+
+
 ## 統合テストへの道
 
 - ユニットテストは当然やっている
