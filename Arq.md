@@ -167,6 +167,7 @@ public class PersistenceTest {
 
 ## Arquillian Drone
 <!-- .slide: data-background="images/arq/feature_browser.png" data-background-size="256px" data-background-position="top right" -->
+
 Seleniumを使ったWebテスト、Ajaxもカバー
 
 ```java
