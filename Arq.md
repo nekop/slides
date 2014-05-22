@@ -1,5 +1,7 @@
 # 統合テスト ヲ
 # 自動化セヨ
+<!-- .slide: class="center" -->
+
 
 
 ## 統合テストへの道
@@ -11,12 +13,14 @@
 - Mock作ったけどその挙動が正しいかどうかわからない
 
 
+
 ## 手動統合テスト
 
 - 膨大なExcelテスト仕様書
 - 膨大なテスト実行コスト
 - 即レガシー、触るな危険
 - つらい
+
 
 
 ## 自動化された統合テスト
@@ -72,7 +76,24 @@ public class HelloBeanTest {
   public static WebArchive createDeployment() {
     return ...;
   }
-} 
+}
+```
+
+
+
+## 実行
+<!-- .slide: data-background="images/arq/arquillian_ui_success_256px.png" data-background-size="256px" data-background-position="top right" -->
+
+```
+$ start-app-server.sh &
+$ mvn test -Parq-remote
+(アプリケーションサーバにデプロイしてテスト実行)
+Results :
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] -----------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] -----------------------------------------
+[INFO] Total time: 5.611 s
 ```
 
 
@@ -81,9 +102,10 @@ public class HelloBeanTest {
 <!-- .slide: data-background="images/arq/arquillian_icon_256px.png" data-background-size="256px" data-background-position="top right" -->
 
 - 本物の実行環境へデプロイ、本物の実行環境上でテスト
+- アプリケーションサーバやフレームワークのライフサイクル管理
+- メジャーなアプリケーションサーバ全部対応
 - テスト対象だけではなく、テストでも`@Inject`や`@PersistenceContext`などが利用可能
 - IDE連携
-- メジャーなアプリケーションサーバ全部対応
 - 様々な拡張機能
 
 
@@ -100,7 +122,7 @@ public class HelloBeanTest {
 - Weld (JSR-299 CDI実装のコンテナ上でのテスト)
 - DeltaSpike (CDIライブラリ)
   - http://deltaspike.apache.org/build.html
-- 個人的にはJPAとかJava EEの機能を試したい時によく使います
+- 個人的にはJPAとかJava EEの機能を試したい時
 
 
 
@@ -116,25 +138,24 @@ public class HelloBeanTest {
 
 ```java
 @RunWith(Arquillian.class)
-public class PersistenceTest { 
+public class PersistenceTest {
   @Deployment
   public static WebArchive deployment() {
-    //... 
+    //...
     .addAsManifestResource("test-persistence.xml","persistence.xml");
   }
 
   @Test
   @UsingDataSet("datasets/users.yml")
   @ShouldMatchDataSet("datasets/expected-users.yml")
-  public void test() { //... } 
-} 
+  public void test() { //... }
+}
 ```
 
 
 
 ## Arquillian Drone
 <!-- .slide: data-background="images/arq/feature_browser.png" data-background-size="256px" data-background-position="top right" -->
-
 Seleniumを使ったWebテスト、Ajaxもカバー
 
 ```java
@@ -223,7 +244,7 @@ Warp
 
 - Arquillianガイド
   - http://arquillian.org/guides/
-- Alien Driven Development 
+- Alien Driven Development
   - http://www.slideshare.net/myfear/alien-drivendevelopment
 - Arquillian Presentations
   - http://aslakknutsen.github.io/presentations/presentations/
