@@ -237,7 +237,7 @@ Warp
 
 
 
-<!-- .slide: data-background="images/arq/desktop_freeyourcode_1280x800.jpg" -->
+<!-- .slide: data-background="images/arq/arquillian_desktop_1024x800.jpg" -->
 
 
 
