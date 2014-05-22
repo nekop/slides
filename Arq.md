@@ -96,7 +96,9 @@ public class HelloBeanTest {
 
 <pre><code class="no-highlight">$ start-app-server.sh &
 $ mvn test -Parq-remote
+
 (=== アプリケーションサーバにデプロイしてテスト実行 ===)
+
 Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] -----------------------------------------
