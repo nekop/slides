@@ -94,17 +94,16 @@ public class HelloBeanTest {
 ## 実行
 <!-- .slide: data-background="images/arq/arquillian_ui_success_256px.png" data-background-size="256px" data-background-position="top right" -->
 
-```
-$ start-app-server.sh &
+<pre><code class="no-highlight">$ start-app-server.sh &
 $ mvn test -Parq-remote
-(アプリケーションサーバにデプロイしてテスト実行)
+(=== アプリケーションサーバにデプロイしてテスト実行 ===)
 Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] -----------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] -----------------------------------------
 [INFO] Total time: 5.611 s
-```
+</code></pre>
 
 
 
