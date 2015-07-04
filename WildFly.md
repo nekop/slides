@@ -28,12 +28,12 @@
 - 2015-07-02 WildFly 9.0
 - 2014-05-30 WildFly 8.1
 - 2014-02-11 WildFly 8.0
-- 2011-2014 JBoss AS 7.x
 
 
 
 ## History
 
+- 2011-2014 JBoss AS 7.x
 - 2010-2011 JBoss AS 6.x
 - 2008-2010 JBoss AS 5.x
 - 2004-2008 JBoss AS 4.x
@@ -45,16 +45,16 @@
 
 ## Java EE 7
 
-- JSF for quick component based web development
-- JAX-RS to build REST server side application
-- EJB to focus on business logic
-- CDI for custom falicities
-- JPA for database access
-- JMS for fast messaging, event driven code
+- **JSF** for quick component based web development
+- **JAX-RS** to build REST server side application
+- **EJB** to focus on business logic
+- **CDI** for custom falicities
+- **JPA** for database access
+- **JMS** for fast messaging, event driven code
 
 
 
-## Powerful Components
+## First Class Components
 
 - Undertow
 - RESTEasy
@@ -106,12 +106,16 @@
 
 
 
-## OpenShift Online
+## OpenShift Online PaaS 
 
-- rhc app create wf jboss-wildfly-9
-  - cd wf
-  - copy your source code here
-  - git push
+https://www.openshift.com/
+
+```
+rhc app create wf jboss-wildfly-9
+cd wf
+[copy your source code here]
+git push
+```
 
 
 
