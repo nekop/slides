@@ -30,6 +30,9 @@
 
 This is *custom* workshop so you can do what you want.
 
+- Storage integration
+- Networking
+
 
 
 ## Environment
