@@ -11,7 +11,7 @@
 ## OpenShiftとは
 <!-- .slide: data-background="images/openshift-jjug/openshift_reverse.png" data-background-size="512px" data-background-position="top right" -->
 
-- Docker / KubernetesベースのPaaS (Platform as a Service)ソフトウェア
+- Docker / KubernetesベースのオープンソースPaaS (Platform as a Service)ソフトウェア
 - Docker / Kubernetesに、「簡単にみんなで使う」ために欠けている要素を追加したもの
 
 
