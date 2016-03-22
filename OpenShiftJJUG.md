@@ -16,6 +16,10 @@
 
 
 
+![origin](images/openshift-jjug/origin-overview.png)
+
+
+
 ## 対象ユーザおよび組織
 
 - Dockerちゃんと使えていない、もっと気軽に使いたい
