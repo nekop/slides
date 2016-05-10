@@ -25,9 +25,9 @@
 
 - みんなで使えるDocker / Kubernetes
   - ユーザ管理、マルチテナント、ネットワークの提供とアクセスコントロール
-- 基本的な機能
+- ユーザ視点からの基本的な機能
   - Dockerイメージのビルド、より柔軟なデプロイメント
-- Win/Mac/Linuxどれでも動くポータブルクライアント `"oc"` とWeb Console
+  - UI - Win/Mac/Linuxどれでも動くポータブルクライアント `"oc"` とWeb Console
 - 改良版Dockerレジストリとイメージのバージョン管理
   - イメージのセキュリティアップデートと自動リビルド/アップデート
 
@@ -45,59 +45,18 @@
 
 - ソースコードからビルド
 - テンプレート指定してビルド
+- Dockerイメージのデプロイ
 - リソースモニタリング
 - ローリングアップデート
 - オートスケール
 
 
 
-## OpenShiftのつかいかた
+## リンク
 
-- コマンドラインでソースコードからビルドしてデプロイ
-  - `oc new-app https://github.com/nekop/hello-sinatra`
-  - `oc expose service hello-sinatra`
+- [OpenShift documentation](https://docs.openshift.org/latest/welcome/index.html)
+- [めもめも](http://enakai00.hatenablog.com/)
+- [akubicharm's blog](http://akubicharm.hatenablog.com/)
+- [OpenShiftの道具箱](http://jp-redhat.com/openeye_online/column/omizo/)
+- [nekop's blog](http://nekop.hatenablog.com/)
 
-
-
-![new-app](images/openshift-jjug/newapp.png)
-
-
-
-## OpenShiftのつかいかた
-
-- ソースツリーだけではなくDockerイメージやDockerfileも丸投げ可
-  - `oc new-app sonatype/nexus`
-  - `oc expose service nexus`
-
-
-
-![nexus](images/openshift-jjug/nexus.png)
-
-
-
-## OpenShiftのつかいかた
-
-- Webコンソールから
-
-
-
-![webconsole](images/openshift-jjug/webconsole.png)
-
-
-
-## OpenShiftのつかいかた
-
-- テンプレートでデータベースやストレージ利用の指定
-  - `oc new-app -f https://raw.githubusercontent.com/goern/mattermost-openshift/centos7/mattermost.yaml`
-
-
-
-![mattermost](images/openshift-jjug/mattermost.png)
-
-
-
-![mattermost-webconsole](images/openshift-jjug/mattermost-webconsole.png)
-
-
-
-## その他のトピック
