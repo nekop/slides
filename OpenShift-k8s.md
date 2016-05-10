@@ -26,18 +26,10 @@
 - みんなで使えるDocker / Kubernetes
   - ユーザ管理、マルチテナント、ネットワークの提供とアクセスコントロール
 - ユーザ視点からの基本的な機能
-  - Dockerイメージのビルド、より柔軟なデプロイメント
-  - UI - Win/Mac/Linuxどれでも動くポータブルクライアント `"oc"` とWeb Console
+  - アプリケーションとDockerイメージのビルド、柔軟なデプロイメント
+  - UI - Win/Mac/Linuxどれでも動くポータブルCLI `"oc"` とWeb Console
 - 改良版Dockerレジストリとイメージのバージョン管理
   - イメージのセキュリティアップデートと自動リビルド/アップデート
-
-
-
-## Build
-
-- Source-to-Image (s2i)
-- Docker
-- Custom
 
 
 
