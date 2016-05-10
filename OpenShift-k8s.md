@@ -24,17 +24,12 @@
 <!-- .slide: data-background="images/openshift-jjug/openshift_reverse.png" data-background-size="512px" data-background-position="top right" -->
 
 - みんなで使えるDocker / Kubernetes
-  - ユーザ管理、マルチテナント、ネットワークの提供
+  - ユーザ管理、マルチテナント、ネットワークの提供とアクセスコントロール
+- 基本的な機能
+  - Dockerイメージのビルド、より柔軟なデプロイメント
 - Win/Mac/Linuxどれでも動くポータブルクライアント `"oc"` とWeb Console
 - 改良版Dockerレジストリとイメージのバージョン管理
-  - イメージのセキュリティアップデートと自動リビルド
-
-
-
-## 基本的な機能
-
-- Dockerイメージのビルド
-- デプロイ
+  - イメージのセキュリティアップデートと自動リビルド/アップデート
 
 
 
@@ -43,6 +38,16 @@
 - Source-to-Image (s2i)
 - Docker
 - Custom
+
+
+
+## デモ
+
+- ソースコードからビルド
+- テンプレート指定してビルド
+- リソースモニタリング
+- ローリングアップデート
+- オートスケール
 
 
 
@@ -83,7 +88,7 @@
 ## OpenShiftのつかいかた
 
 - テンプレートでデータベースやストレージ利用の指定
-  - `oc new-app -f https://github.com/nekop/openshift-sandbox/blob/master/apps/mattermost/mattermost.yaml`
+  - `oc new-app -f https://raw.githubusercontent.com/goern/mattermost-openshift/centos7/mattermost.yaml`
 
 
 
@@ -95,41 +100,4 @@
 
 
 
-## まとめ
-
-- Dockerを活用できる
-- 社内の余っているコンピューティングリソースを有効活用できる
-- アプリケーションを作るための準備がすぐできる
-- 作ったアプリケーションをすぐ公開できる
-
-
-
-## なぜPaaS？
-
-- ITにおいて、アプリケーションが主であり価値を生み出す
-  - インフラはアプリケーションを支えるものであり、直接価値を提供するものではない
-- 全世界がPaaSに注目
-  - アプリケーション開発者をアプリケーション開発にフォーカスさせるために
-  - そしてアプリケーションを迅速に届けるために
-
-
-
-## OpenShift Online v3
-
-### 近日リリース予定！
-
-
-
-![paas-junkie](images/openshift-jjug/paas-junkie.png)
-
-
-
-## リンク
-
-- [OpenShift documentation](https://docs.openshift.org/latest/welcome/index.html)
-- [nekop's blog](http://nekop.hatenablog.com/)
-- [めもめも](http://enakai00.hatenablog.com/)
-- [OpenShiftの道具箱](http://jp-redhat.com/openeye_online/column/omizo/)
-- [akubicharm's blog](http://akubicharm.hatenablog.com/)
-
-
+## その他のトピック
