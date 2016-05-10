@@ -24,12 +24,33 @@
 <!-- .slide: data-background="images/openshift-jjug/openshift_reverse.png" data-background-size="512px" data-background-position="top right" -->
 
 - みんなで使えるDocker / Kubernetes
-  - ユーザ管理、マルチテナント、ネットワークの提供とアクセスコントロール
-- ユーザ視点からの基本的な機能
-  - アプリケーションとDockerイメージのビルド、柔軟なデプロイメント
-  - UI - Win/Mac/Linuxどれでも動くポータブルCLI `"oc"` とWeb Console
+  - ユーザ管理
+  - マルチテナント
+  - ネットワークの提供
+  - アクセスコントロール
 - 改良版Dockerレジストリとイメージのバージョン管理
   - イメージのセキュリティアップデートと自動リビルド/アップデート
+
+
+
+## OpenShift v3
+<!-- .slide: data-background="images/openshift-jjug/openshift_reverse.png" data-background-size="512px" data-background-position="top right" -->
+
+- ユーザ視点からの基本的な機能
+  - アプリケーションとDockerイメージのビルド
+  - 柔軟なデプロイメント
+  - UI
+    - Web Console
+    - Win/Mac/Linuxどれでも動くポータブルCLI `"oc"`
+
+
+
+## OpenShift v3
+<!-- .slide: data-background="images/openshift-jjug/openshift_reverse.png" data-background-size="512px" data-background-position="top right" -->
+
+- 改良版Dockerレジストリとイメージのバージョン管理
+  - イメージのセキュリティアップデート
+  - 自動リビルド/アップデート
 
 
 
@@ -39,8 +60,8 @@
 - テンプレート指定してビルド
 - Dockerイメージのデプロイ
 - リソースモニタリング
-- ローリングアップデート
 - オートスケール
+- ローリングアップデート
 
 
 
