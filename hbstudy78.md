@@ -3,17 +3,12 @@
 
 
 
-# Takayoshi Kimura
-# [@nekop](https://twitter.com/nekop)
-
-
-
 ## お前誰よ？
 
 - Takayoshi Kimura [@nekop](https://twitter.com/nekop)
 - OpenShift Senior Software Maintenance Engineer, Red Hat
-- Kubernetes/OpenShiftﾁｮｯﾄﾃﾞｷﾙ
-- Java EEﾁｮｯﾄﾃﾞｷﾙ
+- Kubernetes/OpenShift 2年ちょい
+- Java EE 13年くらい
 
 
 
@@ -26,13 +21,6 @@
 
 
 
-## 問題
-
-- ノードのディスクフル確定の200GBのイメージをk8sクラスタへデプロイしたらどうなる？
-
-
-
-
 ## Kubernetesアンチパターン
 
 - セットアップと運用
@@ -41,9 +29,16 @@
 
 
 
+## 問題
+
+- ノードのディスクフル確定の200GBのイメージをk8sクラスタへデプロイしたらどうなる？
+
+
+
+
 ## セットアップと運用
 
-- インストーラ選択
+- ツール選択
   - HA構成
   - マスター追加、削除
   - ノード追加、削除
@@ -54,7 +49,6 @@
 
 ## セットアップと運用
 
-- The Hard Way
 - Kops
 - Kube-aws
 - Kubespray
@@ -66,6 +60,7 @@
 ## セットアップと運用
 
 - K8sクラスタが有効活用されてくると、死んだ時のダメージが大きい
+  - 数百ノード、数千アプリ
 - バックアップリストア検証大事
 - 開発、テスト、プロダクションクラスタを分ける
 
@@ -84,14 +79,21 @@
 - HA構成時メンバー数は奇数(3, 5, 7)である必要がある
 - 2メンバーだと片方落ちたら機能しない
 - AZ障害耐性を持たせるためのクロスデータセンターセットアップの場合は少なくとも3つのAZが必要
-- メンバー間ネットワークレイテンシ2ms以下が推奨
+- メンバー間ネットワークレイテンシ2ms以下が推奨、ディスクはSSDで
 
 
 
 ## セキュリティ
 
-- コンテナイメージの脆弱性対応とリビルドプロセス
+- コンテナイメージの脆弱性対応
+  - コンテナのベースイメージのアップデートポリシーと通知
   - コンテナスキャンソフトウェアなど導入
+  - タイムリーに対応できるリビルドとリリースプロセス
+
+
+
+## セキュリティ
+
 - アクセス制限
   - オープンなk8sクラスタでBitCoin掘るの流行ってる
 - コンテナホストのアップデート
@@ -225,6 +227,7 @@ https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/
   - Scale対応しているPod、かつReadWriteOnce以外のPVを利用する必要がある。つまり一般的なDBは×
 - メンテでのpod移動のためにPod Disruption Budgetを設定
 - livenessProbe, readinessProbe, terminationGracePeriodSecondsなどはきちんと指定しておく
+  - 他のPodやServiceを必要とする依存のチェックなどもprobeに組み込む
 
 https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
