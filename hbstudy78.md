@@ -43,10 +43,6 @@
 
 ## セットアップと運用
 
-
-
-## セットアップと運用
-
 - インストーラ選択
   - HA構成
   - マスター追加、削除
@@ -64,13 +60,6 @@
 - Kubespray
 - Rancher
 - etc.
-
-
-
-## Dockerバージョン固定
-
-- セキュリティ修正などのパッケージアップデートを適用するつもりで実行してDockerアップデートされて死亡
-
 
 
 
@@ -96,6 +85,19 @@
 - 2メンバーだと片方落ちたら機能しない
 - AZ障害耐性を持たせるためのクロスデータセンターセットアップの場合は少なくとも3つのAZが必要
 - メンバー間ネットワークレイテンシ2ms以下が推奨
+
+
+
+## セキュリティ
+
+- コンテナイメージの脆弱性対応とリビルドプロセス
+  - コンテナスキャンソフトウェアなど導入
+- アクセス制限
+  - オープンなk8sクラスタでBitCoin掘るの流行ってる
+- コンテナホストのアップデート
+  - セキュリティ修正などのパッケージアップデートを適用するつもりで実行してDockerアップデートされて死亡
+  - 最近はk8sとDockerバージョンの非互換問題は少ない
+
 
 
 
@@ -152,12 +154,42 @@ https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/
 ## PodのCPU, メモリ, ディスク制限
 
 - Quotaで割り当てできるリソース総量を制限
+  - Auto ScaleやRolling Updateできる余地を残す必要があることに注意
 - LimitRangeを定義してCPUメモリ制限
-  - minを定義することでrequests/limits定義必須に
 - Podに個々にresource requests/limits定義
 - PV以外のディスクの制限はいまのところできないので監視でがんばる
 
 https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/
+
+
+
+## LimitRange
+
+- CPUのrequestsのminとmaxは設定、limitsはなくてもいい
+  - limitsがないので空いているCPUは全部使っていい
+- Memoryはlimitsを設定
+  - メモリがBurstableであってもなくてもいい、みたいなアプリはあまりないのでrequestsとlimitsは基本同値
+
+
+
+## CPU CFS Quota
+
+- LimitRangeなどに設定するCPUの単位はコア秒
+  - 8コアのマシンなら1秒あたり8コア秒 = 8000mが最大
+  - アプリに1コア秒を設定しても1コアを1秒利用するわけではない
+    - CPU pinning
+  - 1コア秒の設定で8コアを0.12秒使ってCPU利用率が800%
+
+
+
+## Autoscale
+
+- デフォルト30秒ごとにReady状態のPodのCPU利用を取得
+- 実際のターゲットは指定されたターゲットから上下10%幅
+  - 70%なら77%でscale up, 63%でscale down
+- scale up後は3分、scale down後は5分再スケールしない
+
+https://github.com/kubernetes/community/blob/master/contributors/design-proposals/autoscaling/horizontal-pod-autoscaler.md#autoscaling-algorithm
 
 
 
@@ -166,7 +198,10 @@ https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/
 - ネットワーク帯域制限が必要ならアノテーション
   - tcコマンドが発行される
 
-kubernetes.io/ingress-bandwidth=10Mkubernetes.io/egress-bandwidth=10M
+```
+kubernetes.io/ingress-bandwidth=10M
+kubernetes.io/egress-bandwidth=10M
+```
 
 
 
@@ -187,8 +222,9 @@ https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/
 ## アプリケーション
 
 - ノードメンテ、ノード障害時のサービス断を防ぐにはPodはreplicaを2以上に
-  - Scaling対応しているPod、かつReadWriteOnce以外のPVを利用する必要がある。つまり一般的なDBは×
+  - Scale対応しているPod、かつReadWriteOnce以外のPVを利用する必要がある。つまり一般的なDBは×
 - メンテでのpod移動のためにPod Disruption Budgetを設定
+- livenessProbe, readinessProbe, terminationGracePeriodSecondsなどはきちんと指定しておく
 
 https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
@@ -210,17 +246,52 @@ https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
 
 
+## Scale非対応アプリとノード障害
+
+- フェイルオーバに6分ほどかかるので注意
+  - ノードから40秒status updateがないとNotReady
+    - `--node-monitor-grace-period=40s`
+  -ノードが5分間NotReadyなら障害とみなしPodをEvict
+    - `--pod-eviction-timeout=5m0s`
+
+https://kubernetes.io/docs/admin/kube-controller-manager/
+
+
+
 ## ReadWriteOnceなPV
 
 - 単一ノードからしかマウントできない
 - Pod移動したらVolumeもdetach/attachされる
-- Scalingしても全部同じノードにスケジュールされる
-- Scaling不要なアプリ、Scaling非対応アプリに利用
+- Scaleしても全部同じノードにスケジュールされる
+- Scale不要なアプリ、Scale非対応アプリに利用
+
+
+
+## PV
+
+- リサイズは現状できないので多めに
+  - Snapshot and resize機能は1.8でAlpha
 
 
 
 ## Javaアプリ
 
-- CPU数などからオートチューニング
-  - cgroupsのcfs-quotaなどは見てくれない
+- CPUコア数からスレッド数オートチューニング
+- Heapはcgroupsのメモリ割り当ての50%程度が妥当
+  - Java 8u131以降なら`-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap`
+- 起動スクリプトなどで`/sys/fs/cgroups`を参照して計算して設定する
+- 無設定だとGCが一瞬で割り当てCPU量を使い果たしてしまいアプリにまったくCPUが割当たらなくて数秒止まる
 
+
+
+## Javaアプリ
+
+- GCだけではなく各種ライブラリでも利用されているので注意
+
+```
+Runtime.getRuntime().getMaxMemory()
+Runtime.getRuntime().availableProcessors()
+```
+
+
+# おしまい
