@@ -241,7 +241,7 @@ https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 ## DBをk8s上で動かす
 
 - NFSなどのネットワークファイルシステムのPVを使ってしまいデータ破損
-  - fsync使うようなDB, ElasticSearch, Cassandraなどのアプリケーションでネットワークファイルシステムを使うと危険
+  - fsync/fdatasync使うようなDB, ElasticSearch, Cassandraなどのアプリケーションでネットワークファイルシステムを使うと危険
 - ReadWriteOnceなブロックデバイスPVを使おう
 
 
