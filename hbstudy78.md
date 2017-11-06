@@ -139,8 +139,8 @@ https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/
 ## メモリ
 
 - メモリ不足の場合は基本的にアプリケーションのコンテナからoom-killerに殺される
-- OpenShift 3.6から、Kubernetes 1.8からスワップ無効必須
 - スワップがあると意図しないパフォーマンスダウン
+- OpenShift 3.6から、Kubernetes 1.8からスワップ無効必須
 
 
 
@@ -150,6 +150,7 @@ https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/
   - イメージがでかい
   - ログが大量
   - Volume以外への書き込み、キャッシュをテンポラリファイルとして保持などなど
+- ミスって大きいイメージを作ってしまうのはレジストリ側などでチェック
 
 
 
@@ -169,8 +170,9 @@ https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/
 
 - CPUのrequestsのminとmaxは設定、limitsはなくてもいい
   - limitsがないので空いているCPUは全部使っていい
+  - CPUは多少足りなくなっても多くの場合致命的ではないのでオーバーコミット
 - Memoryはlimitsを設定
-  - メモリがBurstableであってもなくてもいい、みたいなアプリはあまりないのでrequestsとlimitsは基本同値
+  - メモリは確保できないエラーは大抵致命的なのでrequestsとlimitsは基本同値
 
 
 
@@ -180,13 +182,13 @@ https://kubernetes.io/docs/tasks/administer-cluster/memory-default-namespace/
   - 8コアのマシンなら1秒あたり8コア秒 = 8000mが最大
   - アプリに1コア秒を設定しても1コアを1秒利用するわけではない
     - CPU pinning
-  - 1コア秒の設定で8コアを0.12秒使ってCPU利用率が800%
+  - 制限1コア秒の設定で8コアを0.12秒使ってCPU利用率が800%
 
 
 
 ## Autoscale
 
-- デフォルト30秒ごとにReady状態のPodのCPU利用を取得
+- デフォルト30秒ごとにReady状態のPodのCPU利用を取得、直近1分の平均で判定
 - 実際のターゲットは指定されたターゲットから上下10%幅
   - 70%なら77%でscale up, 63%でscale down
 - scale up後は3分、scale down後は5分再スケールしない
@@ -253,9 +255,12 @@ https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
 - フェイルオーバに6分ほどかかるので注意
   - ノードから40秒status updateがないとNotReady
-    - `--node-monitor-grace-period=40s`
-  -ノードが5分間NotReadyなら障害とみなしPodをEvict
-    - `--pod-eviction-timeout=5m0s`
+  - ノードが5分間NotReadyなら障害とみなしPodをEvict
+
+```
+--node-monitor-grace-period=40s
+--pod-eviction-timeout=5m0s
+```
 
 https://kubernetes.io/docs/admin/kube-controller-manager/
 
@@ -281,7 +286,7 @@ https://kubernetes.io/docs/admin/kube-controller-manager/
 
 - CPUコア数からスレッド数オートチューニング
 - Heapはcgroupsのメモリ割り当ての50%程度が妥当
-  - Java 8u131以降なら`-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap`
+  - Java 8u131以降なら `-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap`
 - 起動スクリプトなどで`/sys/fs/cgroups`を参照して計算して設定する
 - 無設定だとGCが一瞬で割り当てCPU量を使い果たしてしまいアプリにまったくCPUが割当たらなくて数秒止まる
 
@@ -295,6 +300,7 @@ https://kubernetes.io/docs/admin/kube-controller-manager/
 Runtime.getRuntime().getMaxMemory()
 Runtime.getRuntime().availableProcessors()
 ```
+
 
 
 # おしまい
